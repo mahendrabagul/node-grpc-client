@@ -20,14 +20,16 @@ let packageDefinition = protoLoader.loadSync(
 let EmployeeService = grpc.loadPackageDefinition(
     packageDefinition).employee.EmployeeService;
 
-let grpcClient;
+let generateCredentials = () => {
+  return grpc.credentials.createSsl(
+      fs.readFileSync(
+          '../certificates/certificatesChain/grpc-root-ca-and-grpc-server-ca-and-grpc-client-ca-chain.crt'),
+      fs.readFileSync('../certificates/clientCertificates/grpc-client.key'),
+      fs.readFileSync('../certificates/clientCertificates/grpc-client.crt')
+  );
+}
 
-let credentials = grpc.credentials.createSsl(
-    fs.readFileSync(
-        '../certificates/certificatesChain/grpc-root-ca-and-grpc-server-ca-chain.crt'),
-);
-
-grpcClient = new EmployeeService(`localhost:50051`, credentials);
+let grpcClient = new EmployeeService(`localhost:50051`, generateCredentials());
 
 let employeeId;
 
