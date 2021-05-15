@@ -4,6 +4,7 @@ const PROTO_PATH = __dirname + '/protos/employee.proto';
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const client = require("./client");
+const fs = require('fs');
 
 let packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
@@ -21,8 +22,12 @@ let EmployeeService = grpc.loadPackageDefinition(
 
 let grpcClient;
 
-grpcClient = new EmployeeService(`localhost:50051`,
-    grpc.credentials.createInsecure());
+let credentials = grpc.credentials.createSsl(
+    fs.readFileSync(
+        '../certificates/certificatesChain/grpc-root-ca-and-grpc-server-ca-chain.crt'),
+);
+
+grpcClient = new EmployeeService(`localhost:50051`, credentials);
 
 let employeeId;
 
