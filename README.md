@@ -34,3 +34,9 @@ mTLS settings in client to connect to server.
 Show `index.js` file and compare current changes with the earlier commit
 
 ---
+Sixth Demo :
+---
+Access golang-grpc-server on KinD-based kubernetes cluster behind secured nginx ingress from host.
+
+- Show `index.js` file and compare current changes with the earlier commit
+---

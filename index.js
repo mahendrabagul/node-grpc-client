@@ -29,7 +29,8 @@ let generateCredentials = () => {
   );
 }
 
-let grpcClient = new EmployeeService(`localhost:50051`, generateCredentials());
+let grpcClient = new EmployeeService(`devsecops.kubedaily.com:443`,
+    generateCredentials());
 
 let employeeId;
 
